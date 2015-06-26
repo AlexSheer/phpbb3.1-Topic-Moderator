@@ -1,0 +1,20 @@
+services:
+    sheer.topicmod.controller:
+        class: sheer\topicmod\controller\topicmod
+        arguments:
+            - @request
+            - @dbal.conn
+            - @auth
+            - @user
+            - %core.root_path%
+            - %core.php_ext%
+    sheer.topicmod.listener:
+        class: sheer\topicmod\event\listener
+        arguments:
+            - %core.root_path%
+            - @template
+            - @user
+            - @dbal.conn
+            - @auth
+        tags:
+            - { name: event.listener }

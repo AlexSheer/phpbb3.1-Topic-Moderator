@@ -28,6 +28,7 @@ class listener implements EventSubscriberInterface
 			'core.user_setup'								=> 'load_language_on_setup',
 			'core.viewtopic_modify_post_action_conditions'	=> 'action_conditions',
 			'core.posting_modify_cannot_edit_conditions'	=> 'edit_conditions',
+			'core.permissions'								=> 'add_permission',
 		);
 	}
 
@@ -99,5 +100,12 @@ class listener implements EventSubscriberInterface
 		{
 			$event['s_cannot_edit'] = $event['s_cannot_edit_time'] = $event['s_cannot_edit_locked'] = false;
 		}
+	}
+
+	public function add_permission($event)
+	{
+		$permissions = $event['permissions'];
+		$permissions['f_topicmod'] = array('lang' => 'ACL_F_TOPICMOD', 'cat' => 'misc');
+		$event['permissions'] = $permissions;
 	}
 }

@@ -23,4 +23,7 @@ $lang = array_merge($lang, array(
 	'OPEN_SUCCESS'			=> 'Тема была успешно открыта',
 	'CLOSE_SUCCESS'			=> 'Тема была успешно закрыта',
 	'CANNOT_MANAGE_TOPIC'	=> 'У вас нет прав доступа в эту часть форума',
+
+	'LOG_TOPIC_CLOSE'		=> '<strong>Закрыта тема</strong>',
+	'LOG_TOPIC_OPEN'		=> '<strong>Открыта ранее закрытая тема</strong>',
 ));

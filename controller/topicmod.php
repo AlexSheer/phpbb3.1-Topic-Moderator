@@ -19,6 +19,9 @@ class topicmod
 	/** @var \phpbb\auth\auth $auth */
 	protected $auth;
 
+	/** @var \phpbb\log\log phpBB log*/
+	protected $log;
+
 	/** @var \phpbb\user */
 	protected $user;
 
@@ -32,6 +35,7 @@ class topicmod
 		\phpbb\request\request_interface $request,
 		\phpbb\db\driver\driver_interface $db,
 		\phpbb\auth\auth $auth,
+		\phpbb\log\log $log,
 		\phpbb\user $user,
 		$phpbb_root_path,
 		$php_ext
@@ -40,6 +44,7 @@ class topicmod
 		$this->request = $request;
 		$this->db = $db;
 		$this->auth = $auth;
+		$this->log = $log;
 		$this->user = $user;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
@@ -59,6 +64,11 @@ class topicmod
 				WHERE topic_id = ' . $topic_id . '';
 			$this->db->sql_query($sql);
 			$message = ($topic_status) ? $this->user->lang['OPEN_SUCCESS'] : $this->user->lang['CLOSE_SUCCESS'];
+
+			$log_operation = ($topic_status) ? 'LOG_TOPIC_OPEN' : 'LOG_TOPIC_CLOSE';
+			$additional_data['forum_id'] = $forum_id;
+			$additional_data['topic_id'] = $topic_id;
+			$this->log->add('mod', $this->user->data['user_id'], $this->user->ip, $log_operation, time(), $additional_data);
 		}
 		else
 		{

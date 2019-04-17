@@ -5,6 +5,7 @@ services:
             - @request
             - @dbal.conn
             - @auth
+            - @log
             - @user
             - %core.root_path%
             - %core.php_ext%
